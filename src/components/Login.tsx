@@ -156,7 +156,6 @@ const handleSubmit = async (e: React.FormEvent) => {
             >
               Validar
             </button>
-
             {/* Clear Button */}
             <button
               type="button"

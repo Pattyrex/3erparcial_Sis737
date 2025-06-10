@@ -1,4 +1,6 @@
 import { CreditCard, PiggyBank, Shield, Heart, Smartphone, Users, TrendingUp, DollarSign } from 'lucide-react';
+import fondoBNB from '../assets/fondo_bnb.png';
+
 
 const BancaPersonas = () => {
   const products = [
@@ -62,7 +64,7 @@ const BancaPersonas = () => {
   return (
     <div className="bg-bnb-light min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-bnb-green to-bnb-green-light text-white py-20">
+      <section className="bg-gradient-to-r from-bnb-green to-bnb-green-light text-white py-20" style={{ backgroundImage: `url(${fondoBNB})` }}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-4">Desde <span className="text-6xl">1872</span></h1>
